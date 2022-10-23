@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/employee")
+@RequestMapping("/employees")
 @RequiredArgsConstructor
 public class EmployeeController {
 
@@ -33,7 +33,6 @@ public class EmployeeController {
     }
 
     @PostMapping
-    @SneakyThrows
     public boolean addEmployee(@RequestBody final EmployeeDto employee) {
         return employeeService.addEmployee(employee);
     }
@@ -42,4 +41,6 @@ public class EmployeeController {
     public EmployeeDto editEmployee(@RequestBody final EmployeeDto employee, @PathVariable("employee_id") final String id) {
         return employeeService.editEmployee(employee, UUID.fromString(id));
     }
+
+
 }

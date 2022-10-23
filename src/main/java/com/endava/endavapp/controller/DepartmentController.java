@@ -2,6 +2,7 @@ package com.endava.endavapp.controller;
 
 import com.endava.endavapp.dto.DepartmentDto;
 import com.endava.endavapp.service.DepartmentService;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,11 +17,10 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/department")
+@RequestMapping("/departments")
 @RequiredArgsConstructor
-public class DeparmentController {
+public class DepartmentController {
     private final DepartmentService departmentService;
-
     @GetMapping
     public List<DepartmentDto> getAllDepartments() {
         return departmentService.getAll();
@@ -38,8 +38,9 @@ public class DeparmentController {
     }
 
     @PutMapping("/{department_id}")
-    public DepartmentDto editEmployee(@RequestBody final DepartmentDto departmentDto,
-                                      @PathVariable("department_id") final String id) {
+    public DepartmentDto editDepartment(@RequestBody final DepartmentDto departmentDto,
+                                        @PathVariable("department_id") final String id) {
         return departmentService.editDepartment(departmentDto, UUID.fromString(id));
     }
+
 }

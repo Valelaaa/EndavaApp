@@ -2,7 +2,6 @@ package com.endava.endavapp.service;
 
 
 import com.endava.endavapp.dto.DepartmentDto;
-import com.endava.endavapp.execption.CouldNotAddElement;
 
 import java.util.List;
 import java.util.UUID;
@@ -29,7 +28,7 @@ public interface DepartmentService {
      * @param department - employee which we will add to database
      * @return true if employee added or false in other case
      */
-    boolean addDepartment(final DepartmentDto department) throws CouldNotAddElement;
+    boolean addDepartment(final DepartmentDto department);
 
     /**
      * Edit a department information in the database
@@ -38,5 +37,6 @@ public interface DepartmentService {
      * @return saved departmentDto
      */
     DepartmentDto editDepartment(final DepartmentDto department, final UUID departmentId);
+
 
 }

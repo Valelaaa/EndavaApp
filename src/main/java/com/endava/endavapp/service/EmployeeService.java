@@ -2,7 +2,6 @@ package com.endava.endavapp.service;
 
 
 import com.endava.endavapp.dto.EmployeeDto;
-import com.endava.endavapp.execption.CouldNotAddElement;
 
 import java.util.List;
 import java.util.UUID;
@@ -29,11 +28,10 @@ public interface EmployeeService {
      * @param employee - employee which we will add to database
      * @return true if employee added or false in other case
      */
-    boolean addEmployee(final EmployeeDto employee) throws CouldNotAddElement;
+    boolean addEmployee(final EmployeeDto employee);
 
     /**
      * Edit an employee information in the database
-     *
      */
     EmployeeDto editEmployee(final EmployeeDto employeeDTO, final UUID employeeDestination);
 

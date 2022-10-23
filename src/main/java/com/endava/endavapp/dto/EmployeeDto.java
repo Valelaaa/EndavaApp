@@ -17,14 +17,13 @@ public class EmployeeDto {
     private String firstName;
     private String lastName;
     private String email;
-    private String departmentName;
+    private DepartmentDto department;
     private String phoneNumber;
     private double salary;
-
     public static EmployeeDto employeeDtoFromEntity(final Employee employee) {
         return EmployeeDto.builder().firstName(employee.getFirstName())
                 .lastName(employee.getLastName())
-                .departmentName(employee.getDepartment().getDepartmentName())
+                .department(DepartmentDto.departmentDtoFromEntity(employee.getDepartment()))
                 .phoneNumber(employee.getPhoneNumber())
                 .email(employee.getEmail())
                 .salary(employee.getSalary())

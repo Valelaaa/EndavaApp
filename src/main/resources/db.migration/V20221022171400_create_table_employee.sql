@@ -11,10 +11,3 @@ CREATE TABLE employee
     CHECK ( salary > 1.0),
     FOREIGN KEY (department_id) REFERENCES department (department_id)
 );
-INSERT INTO employee VALUES('1',
-                            'Valera',
-                            'Cosneanu',
-                            'Dev',
-                            'KosneanuValeriy@gmail.com',
-                            '37367547454',
-                            1200);

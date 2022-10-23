@@ -5,5 +5,3 @@ CREATE TABLE department
     location_name   VARCHAR2(16) NOT NULL,
     PRIMARY KEY (department_id)
 );
-insert into department values('Dev','development','Chisinau');
-select * from department;
