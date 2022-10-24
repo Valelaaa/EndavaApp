@@ -1,6 +1,7 @@
 package com.endava.endavapp.validation;
 
-import com.endava.endavapp.execption.ElementNotFoundException;
+import com.endava.endavapp.dto.EmployeeDto;
+import com.endava.endavapp.exeption.ElementNotFoundException;
 import com.endava.endavapp.repository.DepartmentRepository;
 import com.endava.endavapp.repository.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +15,7 @@ public class DoNotExistValidation {
     private final EmployeeRepository employeeRepository;
 
     public void validateDepartmentExistence(final String name, final String location) {
-        if (!departmentRepository.findByDepartmentNameAndAndLocation(name,location).isPresent()) {
+        if (!departmentRepository.findByDepartmentNameAndLocation(name,location).isPresent()) {
             throw new ElementNotFoundException("Department not found");
         }
     }
@@ -34,5 +35,9 @@ public class DoNotExistValidation {
         if (!employeeRepository.findByPhoneNumber(phoneNumber).isPresent()) {
             throw new ElementNotFoundException("Employee not found");
         }
+    }
+    public void validateEmployeeExistence(final EmployeeDto employeeDto) {
+        validateEmployeeByPhoneNumberExistence(employeeDto.getPhoneNumber());
+        validateEmployeeByEmailExistence(employeeDto.getPhoneNumber());
     }
 }

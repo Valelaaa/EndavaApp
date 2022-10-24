@@ -18,7 +18,6 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.util.UUID;
 
 @Entity
 @Getter
@@ -26,11 +25,12 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@EqualsAndHashCode
 @Table(name = "employee")
 public class Employee {
     @Id
     @Column(name = "employee_id")
-    private UUID id;
+    private String id;
 
     @NotNull
     @NotEmpty
@@ -45,10 +45,9 @@ public class Employee {
     private String lastName;
 
 
-    @ManyToOne
-    @EqualsAndHashCode.Exclude
+    @ManyToOne(targetEntity = Department.class)
     @JoinColumn(name = "department_id")
-    private Department department;
+    private Department departmentId;
 
     @Email
     @NotNull

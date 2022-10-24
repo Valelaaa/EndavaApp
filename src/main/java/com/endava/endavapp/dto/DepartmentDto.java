@@ -4,6 +4,7 @@ import com.endava.endavapp.entity.Department;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
@@ -12,6 +13,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 @Builder
+@EqualsAndHashCode
 public class DepartmentDto {
     private String departmentName;
     private String location;

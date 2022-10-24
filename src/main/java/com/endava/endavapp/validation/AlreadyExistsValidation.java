@@ -1,10 +1,9 @@
 package com.endava.endavapp.validation;
 
-import com.endava.endavapp.execption.AlreadyExistException;
+import com.endava.endavapp.exeption.AlreadyExistException;
 import com.endava.endavapp.repository.DepartmentRepository;
 import com.endava.endavapp.repository.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -15,7 +14,7 @@ public class AlreadyExistsValidation {
     private final EmployeeRepository employeeRepository;
 
     public void validateDepartmentExistence(final String name, final String location) {
-        if (departmentRepository.findByDepartmentNameAndAndLocation(name,location).isPresent()) {
+        if (departmentRepository.findByDepartmentNameAndLocation(name,location).isPresent()) {
             throw new AlreadyExistException("Department already exists");
         }
     }

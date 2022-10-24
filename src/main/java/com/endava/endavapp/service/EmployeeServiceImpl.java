@@ -1,14 +1,14 @@
 package com.endava.endavapp.service;
 
+import com.endava.endavapp.dto.EmployeeDto;
 import com.endava.endavapp.entity.Department;
 import com.endava.endavapp.entity.Employee;
-import com.endava.endavapp.dto.EmployeeDto;
-import com.endava.endavapp.execption.ElementNotFoundException;
+import com.endava.endavapp.exeption.ElementNotFoundException;
 import com.endava.endavapp.repository.DepartmentRepository;
 import com.endava.endavapp.repository.EmployeeRepository;
 import com.endava.endavapp.validation.AlreadyExistsValidation;
 import com.endava.endavapp.validation.DoNotExistValidation;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,8 +16,10 @@ import java.util.NoSuchElementException;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import static java.util.Objects.nonNull;
+
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class EmployeeServiceImpl implements EmployeeService {
     private final EmployeeRepository employeeRepository;
     private final DepartmentRepository departmentRepository;
@@ -33,14 +35,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public EmployeeDto getEmployeeInfoById(final String ID) {
-        return employeeRepository.findById(UUID.fromString(ID))
+        return employeeRepository.findById(ID)
                 .map(EmployeeDto::employeeDtoFromEntity)
                 .orElseThrow(() -> new ElementNotFoundException("Employee not found"));
     }
 
-    @Override
-    public boolean addEmployee(final EmployeeDto employeeDTO) {
-
+    void addValidation(final EmployeeDto employeeDTO){
         doNotExistValidation.validateDepartmentNameExistence(
                 employeeDTO.getDepartment().getDepartmentName()
         );
@@ -50,25 +50,32 @@ public class EmployeeServiceImpl implements EmployeeService {
         alreadyExistsValidation.validateEmployeeByPhoneNumberExistence(
                 employeeDTO.getPhoneNumber()
         );
+    }
+    @Override
+    public boolean addEmployee(final EmployeeDto employeeDTO) {
+        addValidation(employeeDTO);
         final Department department = departmentRepository
-                .findByDepartmentNameAndAndLocation(employeeDTO.
-                                getDepartment().getDepartmentName(),
-                        employeeDTO.getDepartment().getLocation()).orElse(null);
+                .findByDepartmentNameAndLocation(employeeDTO
+                                .getDepartment()
+                                .getDepartmentName(),
+                        employeeDTO
+                                .getDepartment()
+                                .getLocation())
+                .orElse(null);
         final Employee employee = Employee.builder()
                 .firstName(employeeDTO.getFirstName())
                 .lastName(employeeDTO.getLastName())
                 .email(employeeDTO.getEmail())
                 .phoneNumber(employeeDTO.getPhoneNumber())
                 .salary(employeeDTO.getSalary())
-                .id(UUID.randomUUID())
-                .department(department)
+                .id(UUID.randomUUID().toString())
+                .departmentId(department)
                 .build();
-
-        return employeeRepository.save(employee) != null;
+        return nonNull(employeeRepository.save(employee));
     }
 
     @Override
-    public EmployeeDto editEmployee(final EmployeeDto employeeDTO, final UUID employeeDestination) {
+    public EmployeeDto editEmployee(final EmployeeDto employeeDTO, final String employeeDestination) {
 
         doNotExistValidation.validateDepartmentNameExistence(
                 employeeDTO.getDepartment().getDepartmentName()
@@ -81,7 +88,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             updateEmployee.setLastName(employeeDTO.getLastName());
             updateEmployee.setPhoneNumber(employeeDTO.getPhoneNumber());
             updateEmployee.setSalary(employeeDTO.getSalary());
-            updateEmployee.setDepartment(departmentRepository
+            updateEmployee.setDepartmentId(departmentRepository
                     .findFirstByDepartmentName(employeeDTO
                             .getDepartment()
                             .getDepartmentName()).orElse(null));
