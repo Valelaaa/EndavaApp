@@ -25,7 +25,6 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@EqualsAndHashCode
 @Table(name = "employee")
 public class Employee {
     @Id

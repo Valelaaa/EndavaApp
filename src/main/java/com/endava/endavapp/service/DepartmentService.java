@@ -15,7 +15,7 @@ public interface DepartmentService {
     /**
      * Get a specific department information by id
      *
-     * @param ID
+     * @param ID department id
      * @return department Information
      */
     DepartmentDto getDepartmentInformation(final String ID);
@@ -39,7 +39,7 @@ public interface DepartmentService {
     /**
      * Get Department by name
      *
-     * @param name
+     * @param name department name
      * @return DepartmentDto by name
      */
     DepartmentDto getDepartmentByName(final String name);

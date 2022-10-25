@@ -18,7 +18,7 @@ public class DoNotExistValidation {
     public void validateDepartmentExistence(final String name, final String location) {
         if (!departmentRepository
                 .findByDepartmentNameAndLocation(name, location)
-                .isPresent()) {
+                .isEmpty()) {
             throw new ElementNotFoundException(DEPARTMENT_NOT_FOUND);
         }
     }
@@ -26,7 +26,7 @@ public class DoNotExistValidation {
     public void validateDepartmentById(final String id) {
         if (!departmentRepository
                 .findById(id)
-                .isPresent()) {
+                .isEmpty()) {
             throw new ElementNotFoundException(DEPARTMENT_NOT_FOUND);
         }
     }
@@ -34,7 +34,7 @@ public class DoNotExistValidation {
     public void validateDepartmentNameExistence(final String name) {
         if (!departmentRepository
                 .findFirstByDepartmentName(name)
-                .isPresent()) {
+                .isEmpty()) {
             throw new ElementNotFoundException(DEPARTMENT_NOT_FOUND);
         }
     }
@@ -42,7 +42,7 @@ public class DoNotExistValidation {
     public void validateEmployeeByEmailExistence(final String email) {
         if (!employeeRepository
                 .findByEmail(email)
-                .isPresent()) {
+                .isEmpty()) {
             throw new ElementNotFoundException("Employee not found");
         }
     }
@@ -50,7 +50,7 @@ public class DoNotExistValidation {
     public void validateEmployeeByPhoneNumberExistence(final String phoneNumber) {
         if (!employeeRepository
                 .findByPhoneNumber(phoneNumber)
-                .isPresent()) {
+                .isEmpty()) {
             throw new ElementNotFoundException("Employee not found");
         }
     }
