@@ -42,7 +42,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public DepartmentDto getDepartmentByName(String name) {
+    public DepartmentDto getDepartmentByName(final String name) {
         doNotExistValidation.validateDepartmentNameExistence(name);
         return departmentRepository
                 .findFirstByDepartmentName(name)

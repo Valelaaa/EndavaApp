@@ -1,7 +1,7 @@
 package com.endava.endavapp.exeption;
 
 public class AlreadyExistException extends RuntimeException {
-    public AlreadyExistException(String departmentdepartmentAlreadyExists) {
-        super(departmentdepartmentAlreadyExists);
+    public AlreadyExistException(final String departmentAlreadyExists) {
+        super(departmentAlreadyExists);
     }
 }

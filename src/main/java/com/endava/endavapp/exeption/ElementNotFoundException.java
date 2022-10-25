@@ -1,7 +1,7 @@
 package com.endava.endavapp.exeption;
 
 public class ElementNotFoundException extends RuntimeException {
-    public ElementNotFoundException(String departmentNotFound) {
+    public ElementNotFoundException(final String departmentNotFound) {
         super(departmentNotFound);
     }
 }
