@@ -24,7 +24,9 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public List<DepartmentDto> getAll() {
-        return departmentRepository.findAll().stream()
+        return departmentRepository
+                .findAll()
+                .stream()
                 .map(DepartmentDto::departmentDtoFromEntity)
                 .collect(Collectors.toList());
     }
@@ -32,15 +34,18 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public DepartmentDto getDepartmentInformation(final String ID) {
-        return departmentRepository.findById(ID)
-                .map(DepartmentDto::departmentDtoFromEntity).orElseThrow(() ->
-                        new ElementNotFoundException("Department not found"));
+        return departmentRepository
+                .findById(ID)
+                .map(DepartmentDto::departmentDtoFromEntity)
+                .orElseThrow(() ->
+                                     new ElementNotFoundException("Department not found"));
     }
 
     @Override
     public DepartmentDto getDepartmentByName(String name) {
         doNotExistValidation.validateDepartmentNameExistence(name);
-        return departmentRepository.findFirstByDepartmentName(name)
+        return departmentRepository
+                .findFirstByDepartmentName(name)
                 .map(DepartmentDto::departmentDtoFromEntity)
                 .orElse(null);
     }
@@ -49,10 +54,15 @@ public class DepartmentServiceImpl implements DepartmentService {
     public boolean addDepartment(final DepartmentDto departmentDTO) {
         alreadyExistsValidation.validateDepartmentExistence(
                 departmentDTO.getDepartmentName(),
-                departmentDTO.getLocation());
-        final Department department = new Department(UUID.randomUUID().toString(),
+                departmentDTO.getLocation()
+        );
+        final Department department = new Department(
+                UUID
+                        .randomUUID()
+                        .toString(),
                 departmentDTO.getDepartmentName(),
-                departmentDTO.getLocation());
+                departmentDTO.getLocation()
+        );
         return nonNull(departmentRepository.save(department));
     }
 
@@ -63,34 +73,39 @@ public class DepartmentServiceImpl implements DepartmentService {
                 departmentDto.getDepartmentName(),
                 departmentDto.getLocation()
         );
-        if (departmentRepository.findById(departmentId).isPresent()) {
-            final Department updateDepartment =
-                    departmentRepository.getReferenceById(departmentId);
-            updateDepartment.setDepartmentName(departmentDto.getDepartmentName());
-            updateDepartment.setLocation(departmentDto.getLocation());
-            departmentRepository.save(updateDepartment);
-            return DepartmentDto.departmentDtoFromEntity(updateDepartment);
-        } else {
-            throw new ElementNotFoundException("No such Department");
-        }
+        doNotExistValidation
+                .validateDepartmentById(departmentId);
+
+        final Department updateDepartment =
+                departmentRepository
+                        .getReferenceById(departmentId);
+
+        updateDepartment.setDepartmentName(departmentDto.getDepartmentName());
+        updateDepartment.setLocation(departmentDto.getLocation());
+        departmentRepository.save(updateDepartment);
+
+        return DepartmentDto.departmentDtoFromEntity(updateDepartment);
     }
 
 
     @Override
-    public DepartmentDto editDepartmentByName(final DepartmentDto departmentDto
-            , final String name) {
+    public DepartmentDto editDepartmentByName(
+            final DepartmentDto departmentDto,
+            final String name) {
         doNotExistValidation.validateDepartmentNameExistence(name);
         alreadyExistsValidation.validateDepartmentExistence(
                 departmentDto.getDepartmentName(),
-                departmentDto.getLocation());
+                departmentDto.getLocation()
+        );
 
-        final String departmentId =  departmentRepository
+        final String departmentId = departmentRepository
                 .findFirstByDepartmentName(name)
                 .orElse(null)
                 .getDepartmentId();
 
         final Department updateDepartment =
                 departmentRepository.getReferenceById(departmentId);
+
         updateDepartment.setDepartmentName(departmentDto.getDepartmentName());
         updateDepartment.setLocation(departmentDto.getLocation());
         departmentRepository.save(updateDepartment);

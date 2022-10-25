@@ -1,6 +1,5 @@
 package com.endava.endavapp.dto;
 
-import com.endava.endavapp.dto.DepartmentDto;
 import com.endava.endavapp.entity.Employee;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,10 +19,13 @@ public class EmployeeDto {
     private DepartmentDto department;
     private String phoneNumber;
     private double salary;
+
     public static EmployeeDto employeeDtoFromEntity(final Employee employee) {
-        return EmployeeDto.builder().firstName(employee.getFirstName())
+        return EmployeeDto
+                .builder()
+                .firstName(employee.getFirstName())
                 .lastName(employee.getLastName())
-                .department(DepartmentDto.departmentDtoFromEntity(employee.getDepartmentId()))
+                .department(DepartmentDto.departmentDtoFromEntity(employee.getDepartment()))
                 .phoneNumber(employee.getPhoneNumber())
                 .email(employee.getEmail())
                 .salary(employee.getSalary())

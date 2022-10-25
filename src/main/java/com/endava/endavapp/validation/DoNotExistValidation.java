@@ -10,32 +10,51 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class DoNotExistValidation {
+    private static final String DEPARTMENT_NOT_FOUND= "Department not found";
     private final DepartmentRepository departmentRepository;
 
     private final EmployeeRepository employeeRepository;
 
     public void validateDepartmentExistence(final String name, final String location) {
-        if (!departmentRepository.findByDepartmentNameAndLocation(name,location).isPresent()) {
-            throw new ElementNotFoundException("Department not found");
+        if (!departmentRepository
+                .findByDepartmentNameAndLocation(name, location)
+                .isPresent()) {
+            throw new ElementNotFoundException(DEPARTMENT_NOT_FOUND);
+        }
+    }
+
+    public void validateDepartmentById(final String id) {
+        if (!departmentRepository
+                .findById(id)
+                .isPresent()) {
+            throw new ElementNotFoundException(DEPARTMENT_NOT_FOUND);
         }
     }
 
     public void validateDepartmentNameExistence(final String name) {
-        if (!departmentRepository.findFirstByDepartmentName(name).isPresent()) {
-            throw new ElementNotFoundException("Department not found");
+        if (!departmentRepository
+                .findFirstByDepartmentName(name)
+                .isPresent()) {
+            throw new ElementNotFoundException(DEPARTMENT_NOT_FOUND);
         }
     }
+
     public void validateEmployeeByEmailExistence(final String email) {
-        if (!employeeRepository.findByEmail(email).isPresent()) {
+        if (!employeeRepository
+                .findByEmail(email)
+                .isPresent()) {
             throw new ElementNotFoundException("Employee not found");
         }
     }
 
     public void validateEmployeeByPhoneNumberExistence(final String phoneNumber) {
-        if (!employeeRepository.findByPhoneNumber(phoneNumber).isPresent()) {
+        if (!employeeRepository
+                .findByPhoneNumber(phoneNumber)
+                .isPresent()) {
             throw new ElementNotFoundException("Employee not found");
         }
     }
+
     public void validateEmployeeExistence(final EmployeeDto employeeDto) {
         validateEmployeeByPhoneNumberExistence(employeeDto.getPhoneNumber());
         validateEmployeeByEmailExistence(employeeDto.getPhoneNumber());

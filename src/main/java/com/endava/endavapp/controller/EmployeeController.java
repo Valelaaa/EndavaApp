@@ -36,7 +36,8 @@ public class EmployeeController {
     }
 
     @PutMapping("/{employee_id}")
-    public EmployeeDto editEmployee(@RequestBody final EmployeeDto employee, @PathVariable("employee_id") final String id) {
+    public EmployeeDto editEmployee(
+            @RequestBody final EmployeeDto employee, @PathVariable("employee_id") final String id) {
         return employeeService.editEmployee(employee, id);
     }
 

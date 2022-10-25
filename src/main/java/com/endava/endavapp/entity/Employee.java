@@ -47,7 +47,7 @@ public class Employee {
 
     @ManyToOne(targetEntity = Department.class)
     @JoinColumn(name = "department_id")
-    private Department departmentId;
+    private Department department;
 
     @Email
     @NotNull

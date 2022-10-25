@@ -19,7 +19,8 @@ public class DepartmentDto {
     private String location;
 
     public static DepartmentDto departmentDtoFromEntity(final Department department) {
-        return DepartmentDto.builder()
+        return DepartmentDto
+                .builder()
                 .departmentName(department.getDepartmentName())
                 .location(department.getLocation())
                 .build();

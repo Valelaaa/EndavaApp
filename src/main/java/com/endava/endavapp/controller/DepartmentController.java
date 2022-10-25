@@ -19,6 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DepartmentController {
     private final DepartmentService departmentService;
+
     @GetMapping
     public List<DepartmentDto> getAllDepartments() {
         return departmentService.getAll();
@@ -28,8 +29,9 @@ public class DepartmentController {
     public DepartmentDto getDepartmentById(@PathVariable("department_id") final String id) {
         return departmentService.getDepartmentInformation(id);
     }
+
     @GetMapping("name/{department_name}")
-    public DepartmentDto getDepartmentByName(@PathVariable("department_name")final String name){
+    public DepartmentDto getDepartmentByName(@PathVariable("department_name") final String name) {
         return departmentService.getDepartmentByName(name);
     }
 
@@ -40,15 +42,17 @@ public class DepartmentController {
     }
 
     @PutMapping("/{department_id}")
-    public DepartmentDto editDepartment(@RequestBody final DepartmentDto departmentDto,
-                                        @PathVariable("department_id") final String id) {
+    public DepartmentDto editDepartment(
+            @RequestBody final DepartmentDto departmentDto,
+            @PathVariable("department_id") final String id) {
         return departmentService.editDepartment(departmentDto, id);
     }
 
     @PutMapping("/name/{department_name}")
-    public DepartmentDto editDepartmentByName(@RequestBody final DepartmentDto departmentDto,
-                                              @PathVariable("department_name") final String name){
-        return departmentService.editDepartmentByName(departmentDto,name);
+    public DepartmentDto editDepartmentByName(
+            @RequestBody final DepartmentDto departmentDto,
+            @PathVariable("department_name") final String name) {
+        return departmentService.editDepartmentByName(departmentDto, name);
     }
 
 }
