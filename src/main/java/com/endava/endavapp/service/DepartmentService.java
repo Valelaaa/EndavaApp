@@ -1,10 +1,8 @@
 package com.endava.endavapp.service;
 
-
 import com.endava.endavapp.dto.DepartmentDto;
 
 import java.util.List;
-import java.util.UUID;
 
 public interface DepartmentService {
     /**
@@ -17,7 +15,7 @@ public interface DepartmentService {
     /**
      * Get a specific department information by id
      *
-     * @param ID
+     * @param ID department id
      * @return department Information
      */
     DepartmentDto getDepartmentInformation(final String ID);
@@ -33,10 +31,23 @@ public interface DepartmentService {
     /**
      * Edit a department information in the database
      *
-     * @param department what need to change
+     * @param department what to change
      * @return saved departmentDto
      */
-    DepartmentDto editDepartment(final DepartmentDto department, final UUID departmentId);
+    DepartmentDto editDepartment(final DepartmentDto department, final String departmentId);
 
+    /**
+     * Get Department by name
+     *
+     * @param name department name
+     * @return DepartmentDto by name
+     */
+    DepartmentDto getDepartmentByName(final String name);
 
+    /**
+     * @param departmentDto edited department
+     * @param name          destination department
+     * @return edited departmentDto
+     */
+    DepartmentDto editDepartmentByName(final DepartmentDto departmentDto, final String name);
 }

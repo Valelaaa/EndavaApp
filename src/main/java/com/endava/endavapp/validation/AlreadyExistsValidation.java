@@ -1,10 +1,10 @@
 package com.endava.endavapp.validation;
 
-import com.endava.endavapp.execption.AlreadyExistException;
+import com.endava.endavapp.dto.EmployeeDto;
+import com.endava.endavapp.exeption.AlreadyExistException;
 import com.endava.endavapp.repository.DepartmentRepository;
 import com.endava.endavapp.repository.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -15,24 +15,41 @@ public class AlreadyExistsValidation {
     private final EmployeeRepository employeeRepository;
 
     public void validateDepartmentExistence(final String name, final String location) {
-        if (departmentRepository.findByDepartmentNameAndAndLocation(name,location).isPresent()) {
+        if (departmentRepository
+                .findByDepartmentNameAndLocation(name, location)
+                .isPresent()) {
             throw new AlreadyExistException("Department already exists");
         }
     }
+
     public void validateDepartmentNameExistence(final String name) {
-        if (departmentRepository.findFirstByDepartmentName(name).isPresent()) {
+        if (departmentRepository
+                .findFirstByDepartmentName(name)
+                .isPresent()) {
             throw new AlreadyExistException("Department already exists");
         }
     }
+
     public void validateEmployeeByEmailExistence(final String email) {
-        if (employeeRepository.findByEmail(email).isPresent()) {
+        if (employeeRepository
+                .findByEmail(email)
+                .isPresent()) {
             throw new AlreadyExistException("Employee already exists");
         }
     }
 
     public void validateEmployeeByPhoneNumberExistence(final String phoneNumber) {
-        if (employeeRepository.findByPhoneNumber(phoneNumber).isPresent()) {
+        if (employeeRepository
+                .findByPhoneNumber(phoneNumber)
+                .isPresent()) {
             throw new AlreadyExistException("Employee already exists");
         }
+    }
+    public void employeeAlreadyExistsValidation(final EmployeeDto employeeDTO) {
+        validateDepartmentNameExistence(employeeDTO
+                                                .getDepartment()
+                                                .getDepartmentName());
+        validateEmployeeByEmailExistence(employeeDTO.getEmail());
+        validateEmployeeByPhoneNumberExistence(employeeDTO.getPhoneNumber());
     }
 }

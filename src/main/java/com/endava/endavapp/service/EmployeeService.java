@@ -4,7 +4,6 @@ package com.endava.endavapp.service;
 import com.endava.endavapp.dto.EmployeeDto;
 
 import java.util.List;
-import java.util.UUID;
 
 public interface EmployeeService {
     /**
@@ -33,6 +32,6 @@ public interface EmployeeService {
     /**
      * Edit an employee information in the database
      */
-    EmployeeDto editEmployee(final EmployeeDto employeeDTO, final UUID employeeDestination);
+    EmployeeDto editEmployee(final EmployeeDto employeeDTO, final String employeeDestination);
 
 }

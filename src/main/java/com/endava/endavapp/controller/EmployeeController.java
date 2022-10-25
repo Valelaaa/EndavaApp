@@ -3,7 +3,6 @@ package com.endava.endavapp.controller;
 import com.endava.endavapp.dto.EmployeeDto;
 import com.endava.endavapp.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/employees")
@@ -38,8 +36,9 @@ public class EmployeeController {
     }
 
     @PutMapping("/{employee_id}")
-    public EmployeeDto editEmployee(@RequestBody final EmployeeDto employee, @PathVariable("employee_id") final String id) {
-        return employeeService.editEmployee(employee, UUID.fromString(id));
+    public EmployeeDto editEmployee(
+            @RequestBody final EmployeeDto employee, @PathVariable("employee_id") final String id) {
+        return employeeService.editEmployee(employee, id);
     }
 
 

@@ -2,7 +2,6 @@ package com.endava.endavapp.controller;
 
 import com.endava.endavapp.dto.DepartmentDto;
 import com.endava.endavapp.service.DepartmentService;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,13 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/departments")
 @RequiredArgsConstructor
 public class DepartmentController {
     private final DepartmentService departmentService;
+
     @GetMapping
     public List<DepartmentDto> getAllDepartments() {
         return departmentService.getAll();
@@ -31,6 +30,11 @@ public class DepartmentController {
         return departmentService.getDepartmentInformation(id);
     }
 
+    @GetMapping("name/{department_name}")
+    public DepartmentDto getDepartmentByName(@PathVariable("department_name") final String name) {
+        return departmentService.getDepartmentByName(name);
+    }
+
     @PostMapping
     @SneakyThrows
     public boolean addDepartment(@RequestBody final DepartmentDto department) {
@@ -38,9 +42,17 @@ public class DepartmentController {
     }
 
     @PutMapping("/{department_id}")
-    public DepartmentDto editDepartment(@RequestBody final DepartmentDto departmentDto,
-                                        @PathVariable("department_id") final String id) {
-        return departmentService.editDepartment(departmentDto, UUID.fromString(id));
+    public DepartmentDto editDepartment(
+            @RequestBody final DepartmentDto departmentDto,
+            @PathVariable("department_id") final String id) {
+        return departmentService.editDepartment(departmentDto, id);
+    }
+
+    @PutMapping("/name/{department_name}")
+    public DepartmentDto editDepartmentByName(
+            @RequestBody final DepartmentDto departmentDto,
+            @PathVariable("department_name") final String name) {
+        return departmentService.editDepartmentByName(departmentDto, name);
     }
 
 }
